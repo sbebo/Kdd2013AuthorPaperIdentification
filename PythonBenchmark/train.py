@@ -12,7 +12,7 @@ def main():
     target = [0 for x in range(len(features_deleted))] + [1 for x in range(len(features_conf))]
 
     print("Training the Classifier")
-    classifier = RandomForestClassifier(n_estimators=50, 
+    classifier = RandomForestClassifier(n_estimators=100, 
                                         verbose=2,
                                         n_jobs=1,
                                         min_samples_split=10,
