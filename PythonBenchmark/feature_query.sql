@@ -112,7 +112,7 @@ SELECT t.AuthorId,
             ELSE 0
        END AS AvgNumSameConferenceByCoauthors,
        kc.KeywordCount as Keywordcount,
-       tkc.TotalKeywordCount as Totalkeywordcount,
+       --tkc.TotalKeywordCount as Totalkeywordcount,
        tkc.AvgKeywordCount as Avgkeywordcount
 FROM ##DataTable## t
 LEFT OUTER JOIN Paper p ON t.PaperId=p.Id
