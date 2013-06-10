@@ -1,5 +1,5 @@
 import data_io
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 
 def main():
     print("Getting features for deleted papers from the database")
@@ -12,17 +12,16 @@ def main():
     target = [0 for x in range(len(features_deleted))] + [1 for x in range(len(features_conf))]
 
     print("Training the Classifier")
-    classifier = RandomForestClassifier(n_estimators=50, 
-                                        verbose=2,
-                                        n_jobs=1,
-                                        min_samples_split=10,
-                                        compute_importances=True,
-                                        random_state=1)
-    #classifier = GradientBoostingClassifier(n_estimators=100, 
+    #classifier = RandomForestClassifier(n_estimators=100, 
     #                                    verbose=2,
     #                                    n_jobs=1,
     #                                    min_samples_split=10,
+    #                                    compute_importances=True,
     #                                    random_state=1)
+    classifier = GradientBoostingClassifier(n_estimators=100, 
+                                        verbose=2,
+                                        min_samples_split=10,
+                                        random_state=1)
     classifier.fit(features, target)
     print("Saving the classifier")
     data_io.save_model(classifier)

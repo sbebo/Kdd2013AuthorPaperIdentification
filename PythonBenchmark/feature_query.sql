@@ -86,6 +86,29 @@ CoauthorConferenceCounts AS (
    WHERE pa.AuthorId != t.AuthorId
       AND ca.Author1 = t.AuthorId
    GROUP BY t.AuthorId, t.PaperId
+),
+CommonKeywords AS (
+-- Keywords in common with the other papers by same author
+select   pk.paperid, 
+         ak.authorid, 
+         sum(ak.count-1) as common_keywords -- do not count themselves
+from  authorkeywords ak,
+      paperkeywords pk,
+      ##DataTable## t
+where
+   t.paperid = pk.paperid
+   and
+   t.authorid = ak.authorid
+   and
+   ak.keyword = pk.keyword
+   and exists (
+      select null
+      from paperauthor pp
+      where pp.paperid = pk.paperid
+      and pp.authorid = ak.authorid   
+   )
+group by
+   pk.paperid, ak.authorid
 )
 SELECT t.AuthorId,
        t.PaperId,
@@ -111,9 +134,13 @@ SELECT t.AuthorId,
        CASE WHEN ccc.AvgCount > 0 THEN ccc.AvgCount
             ELSE 0
        END AS AvgNumSameConferenceByCoauthors,
-       kc.KeywordCount as Keywordcount,
+       --kc.KeywordCount as Keywordcount,
        --tkc.TotalKeywordCount as Totalkeywordcount,
-       tkc.AvgKeywordCount as Avgkeywordcount
+       --tkc.AvgKeywordCount as Avgkeywordcount,
+       CASE WHEN ck.common_keywords > 0
+       THEN ck.common_keywords 
+       ELSE 0
+       END as Commonkeywords
 FROM ##DataTable## t
 LEFT OUTER JOIN Paper p ON t.PaperId=p.Id
 LEFT OUTER JOIN AuthorJournalCounts ajc
@@ -139,3 +166,6 @@ LEFT OUTER JOIN KeywordCounts kc
    ON kc.PaperID = t.PaperID
 LEFT OUTER JOIN TotalKeywordCounts tkc
    ON tkc.AuthorId = t.AuthorID
+LEFT OUTER JOIN CommonKeywords ck
+   ON ck.authorid = t.authorid
+   AND ck.paperid = t.paperid
