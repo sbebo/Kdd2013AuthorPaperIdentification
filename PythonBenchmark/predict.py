@@ -4,6 +4,8 @@ import data_io
 def main():
     print("Getting features for valid papers from the database")
     data = data_io.get_features_db("ValidPaper")
+    #data = data_io.get_precomputed_features("ValidFeatures")
+
     author_paper_ids = [x[:2] for x in data]
     features = [x[2:] for x in data]
 

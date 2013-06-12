@@ -42,6 +42,15 @@ def write_submission(predictions):
     writer.writerow(("AuthorId", "PaperIds"))
     writer.writerows(rows)
 
+def get_precomputed_features(table_name):
+    conn = get_db_conn()
+    query = open("precomputed_query.sql").read().strip()
+    query = query.replace("##DataTable##", table_name)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    res = cursor.fetchall()
+    return res
+
 def get_features_db(table_name):
     conn = get_db_conn()
     query = get_features_query(table_name)

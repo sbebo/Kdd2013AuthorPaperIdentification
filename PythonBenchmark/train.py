@@ -4,9 +4,11 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 def main():
     print("Getting features for deleted papers from the database")
     features_deleted = data_io.get_features_db("TrainDeleted")
+    #features_deleted = data_io.get_precomputed_features("DeletedFeatures")
 
     print("Getting features for confirmed papers from the database")
     features_conf = data_io.get_features_db("TrainConfirmed")
+    #features_conf = data_io.get_precomputed_features("ConfirmedFeatures")
 
     features = [x[2:] for x in features_deleted + features_conf]
     target = [0 for x in range(len(features_deleted))] + [1 for x in range(len(features_conf))]
