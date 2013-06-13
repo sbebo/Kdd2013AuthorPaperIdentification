@@ -1,0 +1,17 @@
+SELECT AuthorId,
+       PaperId,
+       NumSameJournal, 
+       NumSameConference,
+       NumPapersWithAuthor,
+       NumAuthorsWithPaper,
+       SumPapersWithCoAuthors,
+       AvgPapersWithCoAuthors,
+       NumSameJournalByCoauthors,
+       AvgNumSameJournalByCoauthors,
+       NumSameConferenceByCoauthors,
+       AvgNumSameConferenceByCoauthors,
+       Keywordcount,
+       Totalkeywordcount,
+       Avgkeywordcount,
+       Commonkeywords
+FROM ##DataTable##
