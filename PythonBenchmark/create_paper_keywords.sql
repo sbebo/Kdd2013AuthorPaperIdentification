@@ -22,7 +22,7 @@ AS
    END AS keyword
    FROM
 -- "additional and phrases" -- authorid=35
-   (select id as PaperID, regexp_replace(lower(rtrim(keyword,'.')),'(key.?words?|index ?(terms?)?) ?[\.|:|\-|(\-\-)|—]? ?','') as trimmed
+   (select id as PaperID, regexp_replace(lower(rtrim(keyword,'.')),'(key.?words?( and phrases)?|index ?(terms?)?) ?[\.|:|\-|(\-\-)|—]? ?','') as trimmed
       FROM paper
    ) AS FOO
    ) as allkey

@@ -1,3 +1,4 @@
+drop table deletedfeatures;
 CREATE TABLE DeletedFeatures AS
 (
 WITH 
@@ -32,6 +33,15 @@ SumPapersWithCoAuthors AS (
     WHERE pa.AuthorId != t.AuthorId
       AND ca.Author1 = t.AuthorId
     GROUP BY t.AuthorId, t.PaperId
+),
+PaperAuthorInfo AS (
+   SELECT t.authorid,t.paperid,a.name as OfficialName, a.affiliation as OfficialAffiliation, array_agg(pa.name) as PaperNames, array_agg(pa.affiliation) as Affiliations
+   from TrainDeleted t 
+   LEFT OUTER JOIN PaperAuthor pa
+   ON t.authorid = pa.authorid and t.paperid=pa.paperid
+   LEFT OUTER JOIN Author a
+   ON t.authorid = a.id
+   GROUP BY a.name, a.affiliation, t.authorid, t.paperid
 ),
 CoauthorJournalCounts AS (
    WITH CoAuthors AS (
@@ -143,6 +153,10 @@ SELECT t.AuthorId,
        THEN ck.common_keywords 
        ELSE 0
        END as Commonkeywords
+       --pai.OfficialName,
+       --pai.OfficialAffiliation,
+       --pai.PaperNames,
+       --pai.Affiliations
 FROM TrainDeleted t
 LEFT OUTER JOIN Paper p ON t.PaperId=p.Id
 LEFT OUTER JOIN AuthorJournalCounts ajc
@@ -171,4 +185,7 @@ LEFT OUTER JOIN TotalKeywordCounts tkc
 LEFT OUTER JOIN CommonKeywords ck
    ON ck.authorid = t.authorid
    AND ck.paperid = t.paperid
+LEFT OUTER JOIN PaperAuthorInfo pai
+   ON pai.authorid = t.authorid
+   AND pai.paperid = t.paperid
 );

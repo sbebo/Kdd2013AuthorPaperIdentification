@@ -134,9 +134,9 @@ SELECT t.AuthorId,
        CASE WHEN ccc.AvgCount > 0 THEN ccc.AvgCount
             ELSE 0
        END AS AvgNumSameConferenceByCoauthors,
-       --kc.KeywordCount as Keywordcount,
-       --tkc.TotalKeywordCount as Totalkeywordcount,
-       --tkc.AvgKeywordCount as Avgkeywordcount,
+       kc.KeywordCount as Keywordcount,
+       tkc.TotalKeywordCount as Totalkeywordcount,
+       tkc.AvgKeywordCount as Avgkeywordcount,
        CASE WHEN ck.common_keywords > 0
        THEN ck.common_keywords 
        ELSE 0

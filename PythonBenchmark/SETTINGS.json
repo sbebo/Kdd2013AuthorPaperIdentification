@@ -1,5 +1,5 @@
 {
-    "model_path": "/home/taccari/dev/Kdd2013AuthorPaperIdentification/Models/basicCoauthorBenchmarkRev2.pickle",
-    "submission_path": "/home/taccari/dev/Kdd2013AuthorPaperIdentification/Submissions/basicCoauthorBenchmarkRev2.csv",
-    "postgres_conn_string": "host='localhost' dbname='Kdd2013AuthorPaperIdentification' user='postgres' password='##AskForPassword##'"
+    "model_path": "/home/taccari/dev/Kdd2013AuthorPaperIdentification/Models/basicCoauthorBenchmarkRev2.pickle.copy",
+    "submission_path": "/home/taccari/dev/Kdd2013AuthorPaperIdentification/Submissions/basicCoauthorBenchmarkRev2.csv.copy",
+    "postgres_conn_string": "host='localhost' dbname='Kdd2013AuthorPaperIdentification' user='postgres' password='alice123'"
 }

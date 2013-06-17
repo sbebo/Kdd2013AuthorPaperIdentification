@@ -4,6 +4,7 @@ SELECT AuthorId,
        NumSameConference,
        NumPapersWithAuthor,
        NumAuthorsWithPaper,
+       NumPaperAuthorPairs,
        SumPapersWithCoAuthors,
        AvgPapersWithCoAuthors,
        NumSameJournalByCoauthors,
@@ -11,7 +12,9 @@ SELECT AuthorId,
        NumSameConferenceByCoauthors,
        AvgNumSameConferenceByCoauthors,
        Keywordcount,
-       Totalkeywordcount,
+       --Totalkeywordcount,
        Avgkeywordcount,
-       Commonkeywords
+       --Commonkeywords,
+       CommonTitleWords
+       --NegId
 FROM ##DataTable##
