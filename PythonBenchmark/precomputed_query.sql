@@ -12,9 +12,9 @@ SELECT AuthorId,
        NumSameConferenceByCoauthors,
        AvgNumSameConferenceByCoauthors,
        Keywordcount,
-       --Totalkeywordcount,
+       Totalkeywordcount,
        Avgkeywordcount,
-       --Commonkeywords,
+       Commonkeywords,
        CommonTitleWords
-       --NegId
+       NegId
 FROM ##DataTable##

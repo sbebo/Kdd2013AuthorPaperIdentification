@@ -34,10 +34,10 @@ def main():
     
     scaling = False 
     mp = []
-    for k in xrange(5): 
+    for k in xrange(10): 
         # Now split authors anyway you like.
         print "Split data"
-        authors_train, authors_test = cross_validation.train_test_split(authors,test_size=0.2, random_state=k)
+        authors_train, authors_test = cross_validation.train_test_split(authors,test_size=0.1, random_state=k)
     
         print "Build training set"
         train_indices = [i for (i,x) in enumerate(all_features) if str(x[0]) in authors_train]
@@ -61,14 +61,15 @@ def main():
         test_ground_truth.sort()
     
         print("Training the Classifier")
-        RF = RandomForestClassifier(n_estimators=300, verbose=1, n_jobs=10, min_samples_split=10, compute_importances=True, random_state=1)
+        RF = RandomForestClassifier(n_estimators=100, verbose=1, n_jobs=10, min_samples_split=10, compute_importances=True, random_state=1)
         SVM = svm.SVC(cache_size=1000, verbose=True)
         knn = neighbors.KNeighborsClassifier()
         GBM = GradientBoostingClassifier(n_estimators=100, verbose=1, min_samples_split=10, random_state=1)
         log = linear_model.LogisticRegression(random_state=1)
-        classifier = GBM 
+        classifier = log 
         classifier.fit(train_features, train_targets)
-        print "Feature importance", classifier.feature_importances_
+        if classifier == RF or classifier == GBM:
+            print "Feature importance", classifier.feature_importances_
 
         print("Making predictions")
         predictions = classifier.predict_proba(test_features)[:,1]
@@ -93,6 +94,7 @@ def main():
         print mp[k]
     
     print numpy.mean(mp)
+    print numpy.std(mp)
     
 if __name__=="__main__":
     main()
